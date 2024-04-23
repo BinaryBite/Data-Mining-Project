@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
+import matplotlib.pyplot as plt
 
 # Load the data from CSV files
 customers_df = pd.read_csv("customers.csv")
@@ -17,9 +18,7 @@ merged_df = pd.merge(merged_df, products_df, on="product_id")
 merged_df['order_date'] = pd.to_datetime(merged_df['order_date'])
 recency_df = merged_df.groupby('customer_id')['order_date'].max().reset_index()
 recency_df['recency'] = (pd.to_datetime('now') - recency_df['order_date']).dt.days
-
 frequency_df = merged_df.groupby('customer_id').size().reset_index(name='frequency')
-
 monetary_df = merged_df.groupby('customer_id')['total_price'].sum().reset_index()
 
 # Merge RFM values
@@ -66,7 +65,7 @@ for cluster_id in range(kmeans.n_clusters):
     # Additional insights based on RFM analysis
     if recency_avg > 900:
         print("Recency Segment: Inactive Customers")
-    elif recency_avg < 600:
+    elif recency_avg < 900:
         print("Recency Segment: Active Customers")
         
     if frequency_avg > 10:
@@ -80,3 +79,19 @@ for cluster_id in range(kmeans.n_clusters):
         print("Monetary Segment: Low Monetary Value")
         
     print("\n")
+
+# Visualize all clusters together in 3D
+fig = plt.figure(figsize=(10, 8))
+ax = fig.add_subplot(111, projection='3d')
+
+for cluster_id in range(kmeans.n_clusters):
+    cluster_data = rfm_df[rfm_df['cluster'] == cluster_id]
+    ax.scatter(cluster_data['recency'], cluster_data['frequency'], cluster_data['total_price'], label=f"Cluster {cluster_id}")
+
+ax.set_title("Customer Cluster (Recency, Frequency, Monetary)")
+ax.set_xlabel("Recency of purchase")
+ax.set_ylabel("Frequency of purchase")
+ax.set_zlabel("Purchase amount")
+ax.legend()
+
+plt.show()
