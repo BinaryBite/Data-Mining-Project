@@ -9,7 +9,6 @@ def merge_data():
     products = pd.read_csv('products.csv')
     sales = pd.read_csv('sales.csv')
 
-    # Prepare data
     merged_data = pd.merge(customers, orders, on='customer_id')
     merged_data = pd.merge(merged_data, sales, on='order_id')
     merged_data = pd.merge(merged_data, products, on='product_id')
@@ -31,22 +30,20 @@ def add_ratings(data):
 def recommender2(user_id):
     # Load data
     merged_data = merge_data()
-    
-    # Define age groups
-    merged_data = add_age(merged_data)
 
     # Create ratings
     rating_data = add_ratings(merged_data)
 
     #Represent ratings
-    rating_data = rating_data[['customer_id','product_name','rating']] #removed age
+    rating_data = rating_data[['customer_id','product_name','rating']]
     rating_data.rename(columns = {'customer_id' : 'user', 'product_name': 'item'}, inplace= True)
 
-
-    user_user = UserUser(15, min_nbrs = 3)
+    #Implement reccomender algorithm
+    user_user = UserUser(15, min_nbrs = 3) #setting number of neighbours to consider
     algo = Recommender.adapt(user_user)
     algo.fit(rating_data)
 
+    #create top 3 recommendations for selected user
     user_recs = algo.recommend(user_id, 3,)
     print(user_recs)
 
