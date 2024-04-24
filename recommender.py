@@ -19,7 +19,7 @@ age_labels = ['0-20', '21-30', '31-40', '41-50', '51-60', '61+']
 merged_data['age_group'] = pd.cut(merged_data['age'], bins=age_brackets, labels=age_labels)
 
 # Segmentation features
-features = ['price_per_unit', 'quantity_y']
+features = ['price_per_unit', 'quantity_x']
 
 # Normalise the features(We can consider using MinMaxScaler from class examples?)
 scaler = StandardScaler()
