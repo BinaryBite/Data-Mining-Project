@@ -40,7 +40,7 @@ class SalesPredictor:
         self.y = self.monthly_sales['total_price']
 
         # Split data into train and test
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, self.y, test_size=0.2, random_state=42)
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, self.y, random_state=42)
         
         self.rf_model = RandomForestRegressor()
         self.rf_model.fit(self.X_train, self.y_train)
