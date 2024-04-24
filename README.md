@@ -4,11 +4,13 @@ This project utilizes data mining techniques to assist online retail businesses 
 **Data Files:**
 customers.csv: Contains information about customers, including their unique IDs, names, gender, age, address details, and location.
 sales.csv: Includes sales records, detailing sales IDs, order IDs, product IDs, price per unit, quantity, and total price.
+
 orders.csv: Provides information about customer orders, including order IDs, customer IDs, payment details, order dates, and delivery dates.
 products.csv: Holds details about products, including product IDs, types, names, sizes, colors, prices, quantities, and descriptions.
 
 **Python Scripts:**
 rfm-analysis.py: Conducts RFM (Recency, Frequency, Monetary) analysis on customer data. It calculates recency, frequency, and monetary values for each customer and segments them into clusters using K-means clustering. The script then prints detailed insights for each cluster, aiding in targeted marketing strategies.
+
 basket-analysis.py: Executes basket analysis on sales data. It identifies patterns of co-occurrence between products purchased by customers and suggests strategies such as cross-selling and upselling.
 
 **Installation**
