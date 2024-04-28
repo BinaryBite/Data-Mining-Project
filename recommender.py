@@ -1,41 +1,43 @@
 import pandas as pd
-from sklearn.cluster import KMeans
-from sklearn.preprocessing import StandardScaler
+import numpy as np
+from lenskit.algorithms import Recommender
+from lenskit.algorithms.user_knn import UserUser
 
-# Load data
-customers = pd.read_csv('customers.csv')
-orders = pd.read_csv('orders.csv')
-products = pd.read_csv('products.csv')
-sales = pd.read_csv('sales.csv')
+def merge_data():
+    customers = pd.read_csv('customers.csv')
+    orders = pd.read_csv('orders.csv')
+    products = pd.read_csv('products.csv')
+    sales = pd.read_csv('sales.csv')
 
-# Prepare data
-merged_data = pd.merge(customers, orders, on='customer_id')
-merged_data = pd.merge(merged_data, sales, on='order_id')
-merged_data = pd.merge(merged_data, products, on='product_id')
+    merged_data = pd.merge(customers, orders, on='customer_id')
+    merged_data = pd.merge(merged_data, sales, on='order_id')
+    merged_data = pd.merge(merged_data, products, on='product_id')
+    
+    return merged_data
 
-# Define age groups
-age_brackets = [0, 20, 30, 40, 50, 60, 100]
-age_labels = ['0-20', '21-30', '31-40', '41-50', '51-60', '61+']
-merged_data['age_group'] = pd.cut(merged_data['age'], bins=age_brackets, labels=age_labels)
+def add_ratings(data):
+    data['rating'] = np.random.randint(1, 6, size = data.shape[0])
+    return data
 
-# Segmentation features
-features = ['price_per_unit', 'quantity_x']
+def recommender(user_id):
+    # Load data
+    merged_data = merge_data()
 
-# Normalise the features(We can consider using MinMaxScaler from class examples?)
-scaler = StandardScaler()
-scaled_data = scaler.fit_transform(merged_data[features])
+    # Create ratings
+    rating_data = add_ratings(merged_data)
 
-# Use KMeans for segmentation(can we use Kmeans++ ?)
-kmeans = KMeans(n_clusters=5, random_state=42)
-merged_data['segment'] = kmeans.fit_predict(scaled_data)
+    #Represent ratings
+    rating_data = rating_data[['customer_id','product_name','rating']]
+    rating_data.rename(columns = {'customer_id' : 'user', 'product_name': 'item'}, inplace= True)
 
-# Analyse purchase patterns by region-age segment
-segment = merged_data.groupby(['state', 'age_group', 'product_name']).size().reset_index(name='purchase_count')
+    #Implement reccomender algorithm
+    user_user = UserUser(15, min_nbrs = 3) #setting number of neighbours to consider
+    algo = Recommender.adapt(user_user)
+    algo.fit(rating_data)
 
-# Find the most purchased product within each segment
-segment = segment.sort_values(by=['state', 'age_group', 'purchase_count'], ascending=[True, True, False])
-segment = segment.groupby(['state', 'age_group']).first().reset_index()
+    #create top 3 recommendations for selected user
+    user_recs = algo.recommend(user_id, 3,)
+    print(user_recs)
 
-# Display popular products by segment 
-print("Popular products by region and age group:")
-print(segment)
+
+recommender()
