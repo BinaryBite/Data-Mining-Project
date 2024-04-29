@@ -19,7 +19,7 @@ def add_ratings(data):
     data['rating'] = np.random.randint(1, 6, size = data.shape[0])
     return data
 
-def recommender(user_id):
+def recommender():
     # Load data
     merged_data = merge_data()
 
@@ -28,16 +28,20 @@ def recommender(user_id):
 
     #Represent ratings
     rating_data = rating_data[['customer_id','product_name','rating']]
-    rating_data.rename(columns = {'customer_id' : 'user', 'product_name': 'item'}, inplace= True)
+    rating_data_copy = rating_data.copy()
+    rating_data_copy.rename(columns = {'customer_id' : 'user', 'product_name': 'item'}, inplace= True)
 
     #Implement reccomender algorithm
     user_user = UserUser(15, min_nbrs = 3) #setting number of neighbours to consider
     algo = Recommender.adapt(user_user)
-    algo.fit(rating_data)
+    algo.fit(rating_data_copy)
 
+    return algo
+
+def show_recommendations(user_id, top_n):
+    algo = recommender()
     #create top 3 recommendations for selected user
-    user_recs = algo.recommend(user_id, 3,)
+    user_recs = algo.recommend(user_id, top_n)
     print(user_recs)
-
-
-recommender()
+    
+show_recommendations(1, 3)
