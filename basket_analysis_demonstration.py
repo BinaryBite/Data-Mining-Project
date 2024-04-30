@@ -1,7 +1,6 @@
 import pandas as pd
 import itertools
 from mlxtend.frequent_patterns import apriori, association_rules
-from mlxtend.preprocessing import TransactionEncoder
 
 class BasketAnalysis:
     def __init__(self, merged_data_connection, products_connection):
@@ -68,11 +67,11 @@ class BasketAnalysis:
             print("options are {x}".format(x=current[item].unique()))
             i = input()
 
-            if i not in current[item].unique():
+            if i.lower() not in [x.lower() for x in current[item].unique()]:
                 print(f"That's not a valid {item} name.")
                 break
             else:
-                current = current[current[item] == i]
+                current = current[current[item].str.lower() == i.lower()]
 
         result = current["product_name"].iloc[0]
         return result

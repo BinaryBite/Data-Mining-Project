@@ -12,6 +12,8 @@ Link to github : https://github.com/thatAishwarya/data-mining-group27.git
 
 4) products.csv: Holds details about products, including product IDs, types, names, sizes, colors, prices, quantities, and descriptions.
 
+Note: User ratings and purchase mode(online/offline) have been additionally generated for more detailed analysis in recommender and sales prediction feature respectively.
+
 **Output Files:**
 1) merged_data.csv: Contains merged result of customers, sales, order and products data.
 
@@ -28,12 +30,14 @@ Link to github : https://github.com/thatAishwarya/data-mining-group27.git
 
 5) basket_analysis_demonstration.py: Contains code to easily demonstrate the basket analysis result.
 
+6) data_description.ipynb: Contains code to get an overview of the dataset, eg size of data, number of customers, number of products and product types etc.
+
 **Installation**
 IMPORTANT Pre-requisite : Python, Jupyter Notebook
 
 To run the analysis scripts, follow these steps:
-Step 1) Download the folder 'data-mining-group27'.
-Step 2) Open the terminal at the folder 'data-mining-group27'.
+Step 1) Download the folder 'group_27_code_data'.
+Step 2) Open the terminal or jupyter notebook at the folder 'group_27_code_data'.
 Step 3) Install the required dependencies:
 ```console
 pip install pandas
