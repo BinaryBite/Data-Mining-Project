@@ -1,6 +1,8 @@
 # **AI-Powered Retail Overview:**
 This project utilizes data mining techniques to assist online retail businesses in making informed decisions.
 
+Link to github : https://github.com/thatAishwarya/data-mining-group27.git
+
 **Data Files:**
 1) customers.csv: Contains information about customers, including their unique IDs, names, gender, age, address details, and location.
 
@@ -10,6 +12,11 @@ This project utilizes data mining techniques to assist online retail businesses 
 
 4) products.csv: Holds details about products, including product IDs, types, names, sizes, colors, prices, quantities, and descriptions.
 
+**Output Files:**
+1) merged_data.csv: Contains merged result of customers, sales, order and products data.
+
+2) sorted_association_rules.csv : Contains result of basket analysis.
+
 **Python Scripts:**
 1) rfm-analysis.ipynb: Conducts RFM (Recency, Frequency, Monetary) analysis on customer data. It calculates recency, frequency, and monetary values for each customer and segments them into clusters using K-means++clustering. The script then prints detailed insights for each cluster, aiding in targeted marketing strategies.
 
@@ -18,6 +25,8 @@ This project utilizes data mining techniques to assist online retail businesses 
 3) recommender.ipynb: Recommends products to customers who share similar taste. For demonstartion purpose, use rating has been used to analyse similarity.
 
 4) sales_prediction.ipynb : Predicts monthly sales for 2022 by taking into account the sale for 2021 for both online and offline purchase mode.
+
+5) basket_analysis_demonstration.py: Contains code to easily demonstrate the basket analysis result.
 
 **Installation**
 IMPORTANT Pre-requisite : Python, Jupyter Notebook
