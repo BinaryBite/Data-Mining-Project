@@ -1,7 +1,7 @@
 # **AI-Powered Retail Overview:**
 This project utilizes data mining techniques to assist online retail businesses in making informed decisions.
 
-Link to github : https://github.com/thatAishwarya/data-mining-group27.git
+Link to github : https://github.com/BinaryBite/Data-Mining-Project/
 
 **Data Files:**
 1) customers.csv: Contains information about customers, including their unique IDs, names, gender, age, address details, and location.
